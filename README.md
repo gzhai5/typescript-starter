@@ -58,6 +58,25 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## New Feature
+
+```bash
+# test code for APIs
+$ npm run test
+
+# maually test APIs by curls
+# firstly need to have a database, for instance, my db is postgres on http://localhost:3000/tasks
+# 1. Create a new task 
+$ curl -X POST -H "Content-Type: application/json" -d '{"title": "Task 1", "status": "TODO"}' http://localhost:3000/tasks
+
+# 2. Retrieve a task by its id, !replace id with the exact id number!
+$ curl http://localhost:3000/tasks/{id}
+
+# 3. Delete a task by its id, !replace id with the exact id number!
+$ curl -X DELETE http://localhost:3000/tasks/{id}
+
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
