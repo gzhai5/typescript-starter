@@ -1,3 +1,14 @@
+/*
+This is class constuctor for "Task"
+Each task should have the following properties (will be persisted in database)
+-id (unique identifier, auto-generated)
+-title (string, required)
+-description (string, optional)
+-status (enum, required: ['TODO', 'IN_PROGRESS', 'COMPLETED'])
+-createdAt (date, auto-generated)
+-updatedAt (date, auto-generated)
+*/
+
 export class Task {
   id: number;
   title: string;
@@ -7,7 +18,7 @@ export class Task {
   updatedAt: Date;
 
   constructor(title: string, status: 'TODO' | 'IN_PROGRESS' | 'COMPLETED');
-  constructor(title: string, status: 'TODO' | 'IN_PROGRESS' | 'COMPLETED', description: string);
+  constructor(title: string, status: 'TODO' | 'IN_PROGRESS' | 'COMPLETED', description?: string);
   constructor(title: string, status: 'TODO' | 'IN_PROGRESS' | 'COMPLETED', description?: string) {
     this.title = title;
     this.status = status;
