@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TaskModule } from '../src/task/task.module';
+import { TaskModule } from './task/task.module';
 
 @Module({
   imports: [

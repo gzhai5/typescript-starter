@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { TaskService } from './task/task.service'
-import { Task } from './task/task.entity'
+import { Task } from './task/task.class'
 import { Repository } from 'typeorm';
 
 describe('TaskController (e2e)', () => {
@@ -25,14 +25,20 @@ describe('TaskController (e2e)', () => {
 
   describe('create', () => {
     it('should create a new task', async () => {
-      const task = new Task();
-      task.title = 'New Task';
+      const task = new Task('Task 1', 'TODO');
+      task.id = 1;
+      task.title = 'Task 1';
+      task.description = 'Description 1';
       task.status = 'TODO';
-
-      const savedTask = new Task();
-      savedTask.id = 1;
-      savedTask.title = 'New Task';
-      savedTask.status = 'TODO';
+      task.createdAt = new Date('2023-04-26T10:00:00Z');
+      task.updatedAt = new Date('2023-04-26T10:00:00Z'); 
+      const savedTask = new Task('Task 1', 'TODO');
+      task.id = 1;
+      task.title = 'Task 1';
+      task.description = 'Description 1';
+      task.status = 'TODO';
+      task.createdAt = new Date('2023-04-26T10:00:00Z');
+      task.updatedAt = new Date('2023-04-26T10:00:00Z');
 
       jest.spyOn(taskRepository, 'save').mockResolvedValueOnce(savedTask);
 
@@ -44,7 +50,7 @@ describe('TaskController (e2e)', () => {
   
   describe('findOne', () => {
     it('should find a task by id', async () => {
-      const task = new Task();
+      const task = new Task('Task 1', 'TODO');
       task.id = 1;
       task.title = 'Task 1';
       task.description = 'Description 1';
@@ -62,7 +68,7 @@ describe('TaskController (e2e)', () => {
 
   describe('delete', () => {
     it('should delete a task by id', async () => {
-      const task = new Task();
+      const task = new Task('Task 1', 'TODO');
       task.id = 1;
       task.title = 'Task 1';
       task.description = 'Description 1';
