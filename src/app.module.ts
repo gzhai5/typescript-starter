@@ -13,8 +13,7 @@ import { TaskModule } from './task/task.module';
       username: 'postgres',
       password: 'password',
       database: 'tasks',
-      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-      synchronize: true,
+      entities: []
     }),
     TaskModule,
   ],
