@@ -23,68 +23,38 @@ describe('TaskController (e2e)', () => {
     taskRepository = moduleRef.get<Repository<Task>>(getRepositoryToken(Task));
   });
 
+  // test 1: Create a new task
   describe('create', () => {
     it('should create a new task', async () => {
-      const task = new Task('Task 1', 'TODO');
-      task.id = 1;
-      task.title = 'Task 1';
-      task.description = 'Description 1';
-      task.status = 'TODO';
-      task.createdAt = new Date('2023-04-26T10:00:00Z');
-      task.updatedAt = new Date('2023-04-26T10:00:00Z'); 
-      const savedTask = new Task('Task 1', 'TODO');
-      task.id = 1;
-      task.title = 'Task 1';
-      task.description = 'Description 1';
-      task.status = 'TODO';
-      task.createdAt = new Date('2023-04-26T10:00:00Z');
-      task.updatedAt = new Date('2023-04-26T10:00:00Z');
-
-      jest.spyOn(taskRepository, 'save').mockResolvedValueOnce(savedTask);
-
-      const result = await taskService.create(task);
-
-      expect(result).toEqual(savedTask);
+      const taskData: Partial<Task> = { title: 'Task 1', status: 'TODO' };
+      const createdTask = await taskService.create(taskData);
+  
+      expect(createdTask.title).toEqual(taskData.title);
+      expect(createdTask.status).toEqual(taskData.status);
+      expect(taskService.tasks).toContain(createdTask);
     });
   });
   
+  // test 2: Retrieve a task by its id
   describe('findOne', () => {
     it('should find a task by id', async () => {
       const task = new Task('Task 1', 'TODO');
-      task.id = 1;
-      task.title = 'Task 1';
-      task.description = 'Description 1';
-      task.status = 'TODO';
-      task.createdAt = new Date('2023-04-26T10:00:00Z');
-      task.updatedAt = new Date('2023-04-26T10:00:00Z');
-
-      jest.spyOn(taskRepository, 'findOne').mockResolvedValueOnce(task);
-
-      const result = await taskService.findOne(1);
-
+  
+      taskService.tasks = [task];
+      const result = await taskService.findOne(task.id);  
       expect(result).toEqual(task);
     });
   });
 
+  // task 3: Delete a task by its id
   describe('delete', () => {
     it('should delete a task by id', async () => {
       const task = new Task('Task 1', 'TODO');
       task.id = 1;
-      task.title = 'Task 1';
-      task.description = 'Description 1';
-      task.status = 'TODO';
-      task.createdAt = new Date('2023-04-26T10:00:00Z');
-      task.updatedAt = new Date('2023-04-26T10:00:00Z');
   
-      jest.spyOn(taskRepository, 'findOne').mockResolvedValueOnce(task);
-      jest.spyOn(taskRepository, 'delete').mockResolvedValueOnce({ affected: 1, raw: [] });
-  
-      await taskService.delete(1);
-  
-      expect(taskRepository.findOne).toHaveBeenCalledTimes(1);
-      expect(taskRepository.findOne).toHaveBeenCalledWith({ where: { id: 1 } });
-      expect(taskRepository.delete).toHaveBeenCalledTimes(1);
-      expect(taskRepository.delete).toHaveBeenCalledWith(1);
+      taskService.tasks = [task];
+      await taskService.delete(1); 
+      expect(taskService.tasks).toHaveLength(0);
     });
   });
 });
